@@ -1,0 +1,30 @@
+{
+  "name": "pageon/pageon-fork-config",
+  "type": "library",
+  "description": "Fork is great, but we like to implemented our internal tools into the website we create for our clients",
+  "homepage": "https://github.com/sumocoders/Sumo-specific-Fork-stuff",
+  "license": "BSD",
+  "authors": [
+    {
+      "name": "Jelmer Prins",
+      "email": "jelmer@pageon.be",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^5.4",
+    "pageon/slack-webhook-monolog": "^0.1.2",
+    "symfony/dependency-injection": "^2.3"
+  },
+  "target-dir": "Pageon/PageonForkConfig",
+  "autoload": {
+    "psr-4": {
+      "Pageon\\PageonForkConfig\\": "src/"
+    }
+  },
+  "version": "1.0.0",
+  "config": {
+    "platform": {"php": "5.4"},
+    "sort-packages": true
+  },
+}
