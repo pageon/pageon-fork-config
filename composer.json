@@ -16,13 +16,12 @@
     "pageon/slack-webhook-monolog": "^0.1.2",
     "symfony/dependency-injection": "^2.3"
   },
-  "target-dir": "Pageon/PageonForkConfig",
   "autoload": {
     "psr-4": {
       "Pageon\\PageonForkConfig\\": "src/"
     }
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "config": {
     "platform": {
       "php": "5.4"
