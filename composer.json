@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": "^5.4",
-    "pageon/slack-webhook-monolog": "^0.1.2",
+    "pageon/slack-webhook-monolog": "^0.1.3",
     "symfony/dependency-injection": "^2.3"
   },
   "autoload": {
@@ -21,7 +21,6 @@
       "Pageon\\PageonForkConfig\\": "src/"
     }
   },
-  "version": "1.0.2",
   "config": {
     "platform": {
       "php": "5.4"
