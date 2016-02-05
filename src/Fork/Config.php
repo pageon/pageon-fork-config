@@ -27,12 +27,15 @@ class Config
     public function __construct(ContainerInterface $container = null)
     {
         $this->container = $container;
+
+        if ($this->isInDebugMode()) {
+            return;
+        }
+
         $this->container->set('pageon.monolog', new Logger('pageon'));
 
         // catch all the errors and exceptions and pass them to monolog.
-        if (!$this->isInDebugMode()) {
-            new ErrorHandler($this->container->get('pageon.monolog'));
-        }
+        new ErrorHandler($this->container->get('pageon.monolog'));
 
         // add a monolog handler for slack using webhooks.
         $this->initSlackWebhookMonolog();
