@@ -10,7 +10,6 @@ use Pageon\SlackWebhookMonolog\Slack\User;
 use Pageon\SlackWebhookMonolog\Slack\Username;
 use Pageon\SlackWebhookMonolog\Slack\Webhook;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 
 class Config
 {
