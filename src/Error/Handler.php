@@ -1,6 +1,7 @@
 <?php
 namespace Pageon\PageonForkConfig\Error;
 
+use Pageon\SlackWebhookMonolog\Monolog\Error;
 use Psr\Log\LoggerInterface;
 
 class Handler
