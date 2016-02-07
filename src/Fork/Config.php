@@ -31,28 +31,28 @@ class Config
             return;
         }
 
-        $this->container->set('pageon.monolog', new Logger('pageon'));
+        $this->setService('pageon.monolog', new Logger('pageon'));
 
         // catch all the errors and exceptions and pass them to monolog.
-        new ErrorHandler($this->container->get('pageon.monolog'));
+        new ErrorHandler($this->getService('pageon.monolog'));
 
         // add a monolog handler for slack using webhooks.
         $this->initSlackWebhookMonolog();
     }
 
     /**
-     * Initialize Slack
+     * Initialize the slack webhook monolog handler.
      */
     public function initSlackWebhookMonolog()
     {
         // only activate the error handler when we aren't in debug-mode and an api key is provided
-        if (!$this->isInDebugMode() && $this->container->hasParameter('pageon.slack_webhook')) {
-            $slackWebhook = $this->container->getParameter('pageon.slack_webhook');
+        if (!$this->isInDebugMode() && $this->hasParameter('pageon.slack_webhook')) {
+            $slackWebhook = $this->getParameter('pageon.slack_webhook');
             if (empty($slackWebhook)) {
                 return;
             }
 
-            $this->container->get('pageon.monolog')->pushHandler(
+            $this->getService('pageon.monolog')->pushHandler(
                 new SlackWebhookHandler(
                     new SlackConfig(
                         new Webhook(
@@ -60,7 +60,7 @@ class Config
                         ),
                         new User(
                             new Username(
-                                $this->container->getParameter('site.domain')
+                                $this->getParameter('site.domain')
                             )
                         )
                     ),
@@ -70,12 +70,58 @@ class Config
         }
     }
 
+    /**
+     * Check if we are running in debug mode.
+     *
+     * @return bool
+     */
     private function isInDebugMode()
     {
-        if ($this->container->hasParameter('kernel.debug')) {
-            return $this->container->getParameter('kernel.debug');
-        }
+        return $this->getParameter('kernel.debug', $this->getParameter('fork.debug', false));
+    }
 
-        return $this->container->hasParameter('fork.debug');
+    /**
+     * Get the value of a parameter or the fallback if it doesn't exist.
+     *
+     * @param string $name
+     * @param mixed|null $fallback
+     * @return mixed|null
+     */
+    private function getParameter($name, $fallback = null)
+    {
+        return $this->hasParameter($name) ? $this->container->getParameter($name) : $fallback;
+    }
+
+    /**
+     * Check if we have access to a specific parameter.
+     *
+     * @param string $name
+     * @return bool
+     */
+    private function hasParameter($name)
+    {
+        return $this->container->hasParameter($name);
+    }
+
+    /**
+     * Get a service.
+     *
+     * @param string $name
+     * @return object
+     */
+    private function getService($name)
+    {
+        return $this->container->get($name);
+    }
+
+    /**
+     * Save a service for future reference.
+     *
+     * @param string $name
+     * @param object $service
+     */
+    private function setService($name, $service)
+    {
+        $this->container->set($name, $service);
     }
 }
