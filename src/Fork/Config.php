@@ -1,6 +1,7 @@
 <?php
 namespace Pageon\PageonForkConfig\Fork;
 
+use Monolog\Handler\Curl;
 use Monolog\Logger;
 use Pageon\PageonForkConfig\Error\Handler as ErrorHandler;
 use Pageon\SlackWebhookMonolog\Monolog\Config as MonologConfig;
@@ -62,7 +63,8 @@ class Config
                         $webhook,
                         $this->getUser()
                     ),
-                    new MonologConfig(Logger::WARNING, $this->getParameter('pageon.slack_bubble', true))
+                    new MonologConfig(Logger::WARNING, $this->getParameter('pageon.slack_bubble', true)),
+                    new Curl\Util()
                 )
             );
         }
