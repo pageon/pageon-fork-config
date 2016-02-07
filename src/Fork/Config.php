@@ -6,6 +6,8 @@ use Pageon\PageonForkConfig\Error\Handler as ErrorHandler;
 use Pageon\SlackWebhookMonolog\Monolog\Config as MonologConfig;
 use Pageon\SlackWebhookMonolog\Slack\Config as SlackConfig;
 use Pageon\SlackWebhookMonolog\Monolog\SlackWebhookHandler;
+use Pageon\SlackWebhookMonolog\Slack\EmojiIcon;
+use Pageon\SlackWebhookMonolog\Slack\UrlIcon;
 use Pageon\SlackWebhookMonolog\Slack\User;
 use Pageon\SlackWebhookMonolog\Slack\Username;
 use Pageon\SlackWebhookMonolog\Slack\Webhook;
@@ -47,27 +49,71 @@ class Config
     {
         // only activate the error handler when we aren't in debug-mode and an api key is provided
         if (!$this->isInDebugMode() && $this->hasParameter('pageon.slack_webhook')) {
-            $slackWebhook = $this->getParameter('pageon.slack_webhook');
-            if (empty($slackWebhook)) {
+            $webhook = $this->getWebhook();
+            // if there is no webhook all of this is pointless.
+            if ($webhook === null) {
                 return;
             }
 
             $this->getService('pageon.monolog')->pushHandler(
                 new SlackWebhookHandler(
                     new SlackConfig(
-                        new Webhook(
-                            $slackWebhook
-                        ),
-                        new User(
-                            new Username(
-                                $this->getParameter('site.domain')
-                            )
-                        )
+                        $webhook,
+                        $this->getUser()
                     ),
-                    new MonologConfig(Logger::WARNING)
+                    new MonologConfig(Logger::WARNING, $this->getParameter('pageon.slack_bubble', true))
                 )
             );
         }
+    }
+
+    /**
+     * Get the user.
+     *
+     * @return User
+     */
+    private function getUser()
+    {
+        return new User(
+            new Username(
+                $this->getParameter('site.domain')
+            ),
+            $this->getIcon()
+        );
+    }
+
+    /**
+     * Get the custom icon of the correct type if there is one set.
+     */
+    private function getIcon()
+    {
+        if ($this->hasParameter('pageon.slack_icon.emoji')) {
+            return new EmojiIcon($this->getParameter('pageon.slack_icon.emoji'));
+        }
+
+        if ($this->hasParameter('pageon.slack_icon.url')) {
+            return new UrlIcon($this->getParameter('pageon.slack_icon.url'));
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the webhook for slack.
+     *
+     * @return null|Webhook
+     */
+    private function getWebhook()
+    {
+        $slackWebhook = $this->getParameter('pageon.slack_webhook');
+        if (empty($slackWebhook)) {
+            return null;
+        }
+
+        return new Webhook(
+            $slackWebhook,
+            $this->getParameter('pageon.slack_channel')
+        );
     }
 
     /**
