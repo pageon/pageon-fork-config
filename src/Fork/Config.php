@@ -76,7 +76,7 @@ class Config
     {
         return new User(
             new Username(
-                $this->getParameter('site.domain')
+                $this->getParameter('pageon.slack_username', $this->getParameter('site.domain'))
             ),
             $this->getIcon()
         );
