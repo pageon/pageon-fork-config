@@ -4,6 +4,7 @@ namespace Pageon\PageonForkConfig\Fork;
 use Monolog\Logger;
 use Pageon\PageonForkConfig\Error\Handler as ErrorHandler;
 use Pageon\SlackWebhookMonolog\Monolog\Config as MonologConfig;
+use Pageon\SlackWebhookMonolog\Slack\Channel;
 use Pageon\SlackWebhookMonolog\Slack\Config as SlackConfig;
 use Pageon\SlackWebhookMonolog\Monolog\SlackWebhookHandler;
 use Pageon\SlackWebhookMonolog\Slack\EmojiIcon;
@@ -112,7 +113,7 @@ class Config
 
         return new Webhook(
             $slackWebhook,
-            $this->getParameter('pageon.slack_channel')
+            new Channel($this->getParameter('pageon.slack_channel'))
         );
     }
 
