@@ -1,4 +1,5 @@
 <?php
+
 namespace Pageon\PageonForkConfig\Fork;
 
 use Monolog\Handler\Curl;
@@ -98,7 +99,7 @@ class Config
             return new UrlIcon($this->getParameter('pageon.slack_icon.url'));
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -110,7 +111,7 @@ class Config
     {
         $slackWebhook = $this->getParameter('pageon.slack_webhook');
         if (empty($slackWebhook)) {
-            return null;
+            return;
         }
 
         return new Webhook(
@@ -134,6 +135,7 @@ class Config
      *
      * @param string $name
      * @param mixed|null $fallback
+     *
      * @return mixed|null
      */
     private function getParameter($name, $fallback = null)
@@ -145,6 +147,7 @@ class Config
      * Check if we have access to a specific parameter.
      *
      * @param string $name
+     *
      * @return bool
      */
     private function hasParameter($name)
@@ -156,6 +159,7 @@ class Config
      * Get a service.
      *
      * @param string $name
+     *
      * @return object
      */
     private function getService($name)

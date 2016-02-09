@@ -1,4 +1,5 @@
 <?php
+
 namespace Pageon\PageonForkConfig\Error;
 
 use Pageon\SlackWebhookMonolog\Monolog\Error;
@@ -12,7 +13,7 @@ class Handler
     private $logger;
 
     /**
-     * Set the error handlers
+     * Set the error handlers.
      *
      * @param LoggerInterface $logger
      */
@@ -20,9 +21,9 @@ class Handler
     {
         $this->logger = $logger;
 
-        set_error_handler(array($this, 'onError'), error_reporting());
-        set_exception_handler(array($this, 'onException'));
-        register_shutdown_function(array($this, 'onShutdown'));
+        set_error_handler([$this, 'onError'], error_reporting());
+        set_exception_handler([$this, 'onException']);
+        register_shutdown_function([$this, 'onShutdown']);
     }
 
     /**
@@ -46,7 +47,7 @@ class Handler
                         $line,
                         debug_backtrace(),
                         $context
-                    )
+                    ),
                 ]
             );
             $this->showNiceError();
@@ -68,7 +69,7 @@ class Handler
                     $exception->getFile(),
                     $exception->getLine(),
                     $exception->getTrace()
-                )
+                ),
             ]
         );
 
@@ -76,7 +77,7 @@ class Handler
     }
 
     /**
-     * When the process is shutdown we will check for errors
+     * When the process is shutdown we will check for errors.
      */
     public function onShutdown()
     {
@@ -89,14 +90,14 @@ class Handler
                         $error['message'],
                         $error['file'],
                         $error['line']
-                    )
+                    ),
                 ]
             );
         }
     }
 
     /**
-     * Show a nice error to our visitors
+     * Show a nice error to our visitors.
      */
     private function showNiceError()
     {
