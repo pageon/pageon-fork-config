@@ -1,4 +1,4 @@
-1.1.0 (xxxx-xx-xx)
+1.1.0 (2016-02-09)
 --
 Improvements:
 
