@@ -43,8 +43,8 @@ class Handler
                 [
                     'error' => new Error(
                         $message,
-                        $file,
                         $line,
+                        $file,
                         debug_backtrace(),
                         $context
                     ),
@@ -66,8 +66,8 @@ class Handler
             [
                 'error' => new Error(
                     $exception->getMessage(),
-                    $exception->getFile(),
                     $exception->getLine(),
+                    $exception->getFile(),
                     $exception->getTrace()
                 ),
             ]
@@ -88,8 +88,8 @@ class Handler
                 [
                     'error' => new Error(
                         $error['message'],
-                        $error['file'],
-                        $error['line']
+                        $error['line'],
+                        $error['file']
                     ),
                 ]
             );
