@@ -1,3 +1,9 @@
+1.2.2 (2016-02-13)
+--
+Improvements:
+
+* Bumped minimum version of the SlackWebhookMonolog handler to 1.0.1 to get a critical bugfix
+
 1.2.1 (2016-02-13)
 --
 Improvements:
