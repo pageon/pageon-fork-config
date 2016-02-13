@@ -1,3 +1,11 @@
+1.2.1 (2016-02-13)
+--
+Improvements:
+
+Bugfixes:
+
+* Fix error when creating a webhook without a custom channel in the settings
+
 1.2.0 (2016-02-13)
 --
 Improvements:

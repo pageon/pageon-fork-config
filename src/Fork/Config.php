@@ -117,7 +117,9 @@ class Config
 
         return new Webhook(
             new Url($slackWebhook),
-            new Channel($this->getParameter('pageon.slack_channel'))
+            ($this->hasParameter('pageon.slack_channel')) ? new Channel(
+                $this->getParameter('pageon.slack_channel')
+            ) : null
         );
     }
 
