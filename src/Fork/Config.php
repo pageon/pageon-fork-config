@@ -5,6 +5,7 @@ namespace Pageon\PageonForkConfig\Fork;
 use Monolog\Handler\Curl;
 use Monolog\Logger;
 use Pageon\PageonForkConfig\Error\Handler as ErrorHandler;
+use Pageon\SlackWebhookMonolog\General\Url;
 use Pageon\SlackWebhookMonolog\Monolog\Config as MonologConfig;
 use Pageon\SlackWebhookMonolog\Slack\Channel;
 use Pageon\SlackWebhookMonolog\Slack\Config as SlackConfig;
@@ -115,7 +116,7 @@ class Config
         }
 
         return new Webhook(
-            $slackWebhook,
+            new Url($slackWebhook),
             new Channel($this->getParameter('pageon.slack_channel'))
         );
     }
