@@ -1,4 +1,4 @@
-# Sumo specific Fork stuff
+# Pageon specific Fork stuff
 
 Fork CMS is great, we use it all the time for client-projects. But we also
 like our internal tools.
